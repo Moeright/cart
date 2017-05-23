@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <% include header %>  <p class="gocart"><a href="/cart">去购物车</a></p>
+    <!-- <h1><%= title %></h1> -->
+    <!-- <p>Welcome to <%= title %>！</p> -->
+    <% if(logined) {%>
+    <div class="regist">
+      <p>欢迎 <%= username %> 登录了！</p>
+    </div>
+    <%} else {%>
+    <p class="deng">
+      <a href="/login">登录</a>
+      <a href="/reg">注册</a>
+    </p>
+    <%}%>
+
+  <ul class="index-list">
+    <% for(var i=0;i<indexData.length;i++){ %>
+    <li>
+      <img src="<%= indexData[i].imgurl %>">
+      <p><%= indexData[i].pname %></p>
+      <p>￥：<%= indexData[i].price %></p>
+      <button onclick="addCart(<%= indexData[i].pid %>)">加入购物车</button>
+    </li>
+    <% }%>
+  </ul>
+
+    <script src="/javascripts/jquery-1.11.3.js"></script>
+<script>
+
+  function addCart(pid) {
+    //需要商品的id，
+    console.log(pid)
+    $.get("/cart/add",{pid:pid},function (data) {
+      console.log(data)
+      alert(data)
+    })
+  }
+
+</script>
+
+  </body>
+</html>

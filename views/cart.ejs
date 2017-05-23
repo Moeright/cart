@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>购物车</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+    <% include header %>
+    <h2>购物车</h2>
+    <% if(logined) {%>
+
+  <ul class="cart-list">
+
+    <% if(!cartData.length){%>
+      <div>购物车空空如也，请去<a href="/">首页逛逛</a></div>
+    <%}%>
+
+
+    <% for(var i=0;i<cartData.length;i++) {%>
+      <li data-totalnumber="<%= cartData[i].totalnumber %>">
+        <img src="<%= cartData[i].imgurl %>">
+        <p><%= cartData[i].pname %></p>
+        <p>数量：<%= cartData[i].number %></p>
+        <p>单价：<%= cartData[i].price %></p>
+
+
+         <button onclick="fnDel(<%= cartData[i].cartid %>)">删除</button>
+      </li>
+    <%}%>
+  </ul>
+    <%} else{%>
+    <div>请先<a href="/login">登录</a>!!!</div>
+    <%}%>
+  </body>
+  <script src="/javascripts/jquery-1.11.3.js"></script>
+  <script type="text/javascript">
+    function fnDel(cartid) {
+      $.get("/cart/del",{cartid:cartid},function (data) {
+        alert(data);
+      })
+    }
+  </script>
+</html>
